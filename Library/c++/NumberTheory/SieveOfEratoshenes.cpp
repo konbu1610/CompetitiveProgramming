@@ -1,7 +1,7 @@
 /*
   エラトステネスの篩
   O( n log log n )
-  verified yukicoder No. 3
+  verified yukicoder No. 6
  */
 const int MAX_N = 1e6+10;
 vector<int> primes;
