@@ -1,13 +1,14 @@
 /*
     遅延伝搬 segment tree
     (区間加算、区間和取得)
-    
+
     verified : AOJ DSL2 G
 */
 template <typename T>
 struct SegTree {
     int n;
     vector<T> dat, lazy;
+    vector<int> width;
     const T NIL = 0;
     const T DFLT;    // 範囲外で返す値 minQuery -> 1e18, maxQuery -> -1e18
     SegTree(int n_, const T& initV, const T& dflt) : DFLT(dflt) {
@@ -15,6 +16,15 @@ struct SegTree {
         while (n < n_) n *= 2;
         dat.assign(2 * n - 1, initV);
         lazy.assign(2 * n - 1, NIL);
+        width.assign(2 * n - 1, 0);
+
+        width[0] = 1;
+        rep(i, width.size()) {
+            int k = i*2+1;
+            if(k >= width.size()) continue;
+            width[k] = width[i]*2;
+            width[k+1] = width[i]*2;
+        }
     }
     void add(int l, int r, const T& t) {
         add(l, r, t, 0, 0, n);
@@ -29,19 +39,9 @@ private:
     void fix(int k) {
         dat[k] = f(dat[k * 2 + 1], dat[k * 2 + 2]);
     }
-    ll width(int k) {
-        int ret = n;
-        int p = 1, num = 0;
-        while(num < k) {
-            ret /= 2;
-            p *= 2;
-            num += p;
-        }
-        return ret;
-    }
     void setLazy(int k, const T& v) {
-        lazy[k] += v; 
-        dat[k] += v * width(k);
+        lazy[k] += v;
+        dat[k] += v * width[k];
     }
     void push(int k) {
         if (lazy[k] == NIL) return;

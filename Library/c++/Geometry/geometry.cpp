@@ -21,14 +21,14 @@ typedef complex<D> P;
 typedef complex<D> point;
 namespace std {
     bool operator < (const P& a, const P& b) {
-        return real(a) != real(b) ? real(a) < real(b) : imag(a) < imag(b);
+        return x(a) != x(b) ? x(a) < x(b) : y(a) < y(b);
     }
 }
 D cross(const P& a, const P& b) {
-    return imag(conj(a)*b);
+    return y(conj(a)*b);
 }
 D dot(const P& a, const P& b) {
-    return real(conj(a)*b);
+    return x(conj(a)*b);
 }
 
 struct L : public vector<P> {
@@ -114,8 +114,8 @@ int contains(const polygon& P, const point& p) {
     bool in = false;
     for (int i = 0; i < P.size(); ++i) {
         point a = curr(P,i) - p, b = next(P,i) - p;
-        if (imag(a) > imag(b)) swap(a, b);
-        if (imag(a) <= 0 && 0 < imag(b))
+        if (y(a) > y(b)) swap(a, b);
+        if (y(a) <= 0 && 0 < y(b))
             if (cross(a, b) < 0) in = !in;
         if (cross(a, b) == 0 && dot(a, b) <= 0) return ON;
     }
@@ -274,12 +274,12 @@ vector<P> crossPoint(C c, L l) {
     l[0] -= sub;
     l[1] -= sub;
 
-    theta = atan2(imag(l[1]-l[0]), real(l[1]-l[0]));
+    theta = atan2(y(l[1]-l[0]), x(l[1]-l[0]));
 
     l[0] = spinP(l[0], -theta);
     l[1] = spinP(l[1], -theta);
 
-    assert(abs(imag(l[0]-l[1])) < EPS);
+    assert(abs(y(l[0]-l[1])) < EPS);
 
     vector<P> ret;
     if(abs(abs(l[0].Y) - R) < EPS) ret.pb({0.0, l[0].Y});
