@@ -1,0 +1,18 @@
+C-g  => command cancel
+C-x C-f => open file
+M-x compile
+M-x recompile
+C-x ` => next warrning or error
+M-! => shell command
+C-s => search
+M-% => replace
+M-x => indent-region
+C-x o => switch next window
+C-x 1 => only one window
+C-x C-b => buffer list
+C-x b => switch buffer
+M ; => comment out
+C space => markset
+C-x k => kill buffer
+M-C-¥ => indent
+C-x C-x => change cursor mark
