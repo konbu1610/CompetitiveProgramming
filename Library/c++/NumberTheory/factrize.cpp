@@ -1,7 +1,7 @@
 /*
   factrization
   O( sqrt(n) )
-  verified yukicoder No. 3
+  verified yukicoder No. 2
  */
 
 using Facts = map<ll, int>; 
