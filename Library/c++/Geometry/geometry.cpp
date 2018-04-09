@@ -262,7 +262,7 @@ vector<L> comonTang(C c1, C c2) {
 }
 
 
-//円と直線の交点                           CGL_7_D posRelがおかしいかも？
+//円と直線の交点                           CGL_7_D posRelがおかしいかも？ => やばい SRM 401 DIV1 MED 通す
 vector<P> crossPoint(C c, L l) {
     int hit = posRel(l, c);
     if(hit == 0) return {};
