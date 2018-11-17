@@ -41,7 +41,7 @@ D norm(const P& p) {
 }
 //----------------------------------------
 //直線・線分の当たり判定、円・直線、線分の当たり判定、距離等 
-// verify aoj 2641
+// verify aoj 2641 aoj1331
 bool isHitLP(const L&l ,const P& p) {
     P v = l[1] - l[0], v1 = p - l[0];
     return abs(norm(cross(v, v1))) < EPS;
