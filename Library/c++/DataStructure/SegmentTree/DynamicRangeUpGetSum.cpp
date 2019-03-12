@@ -1,3 +1,9 @@
+/*
+    verify 
+    aoj DSL 2I
+    Atcoder nikkei2019-final D
+*/
+
 using ull = unsigned long long;
 
 constexpr ll initVal = 0LL;     //TODO: fix type and value
