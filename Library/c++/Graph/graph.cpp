@@ -8,6 +8,9 @@
     Graph:
         dijkstra        ABC035D
         warshall_floyd  ABC051D
+
+    GraphD:
+        bellmanFord2 ABC137E
 */
 
 template<typename T> T chmax(T& a, const T& b) {return a = (a > b ? a : b);}
@@ -66,6 +69,24 @@ struct Graph {
             chmin(d[i][j], d[i][k] + d[k][j]);
         }
         return d;
+    }
+    // 頂点sから到達できるか
+    vector<bool> getVisitable(int s) {
+        vector<bool> ret(n);
+        queue<int> q;
+        q.push(s);
+        ret[s] = true;
+        while(!q.empty()) {
+            auto cur = q.front();
+            q.pop();
+            for(auto&& e : es[cur]) {
+                if(!ret[e.to]) {
+                    ret[e.to] = true;
+                    q.push(e.to);
+                }
+            }
+        }
+        return ret;
     }
 };
 
@@ -149,5 +170,44 @@ struct GraphD : public Graph {
             res[cmp[i]].push_back(i);
         }
         return res;
+    }
+    // bellmanFord 負閉路があるなら, dist[s] = INF | O(VE)
+    vector<WEIGHT_TYPE> bellmanFord(int s) {
+        vector<WEIGHT_TYPE> dist(n, INF);
+        dist[s] = 0;
+        auto es = getEdge2();
+        rep(i, n) {
+            for(auto&& e : es) {
+                if(dist[e.to] > dist[e.from] + e.weight) {
+                    dist[e.to] = dist[e.from] + e.weight;
+                    if(i == n-1) {
+                        dist[s] = INF;
+                        return dist;
+                    }
+                }
+            }
+        }
+        return dist;
+    }
+    // bellmanFord s->tの経路上に負閉路があるなら, dist[s] = INF | O(VE)
+    vector<WEIGHT_TYPE> bellmanFord2(int s, int t) {
+        vector<WEIGHT_TYPE> dist(n, INF);
+        auto f1 = getVisitable(s);
+        auto f2 = getReverseGraph().getVisitable(t);
+        dist[s] = 0;
+        auto es = getEdge2();
+        rep(i, n) {
+            for(auto&& e : es) {
+                if(!(f1[e.from]&&f2[e.to])) continue;
+                if(dist[e.to] > dist[e.from] + e.weight) {
+                    dist[e.to] = dist[e.from] + e.weight;
+                    if(i == n-1) {
+                        dist[s] = INF;
+                        return dist;
+                    }
+                }
+            }
+        }
+        return dist;
     }
 };
