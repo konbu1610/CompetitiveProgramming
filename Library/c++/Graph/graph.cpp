@@ -8,6 +8,7 @@
     Graph:
         dijkstra        ABC035D
         warshall_floyd  ABC051D
+        isBipartile     code-festival2017QualB C
 
     GraphD:
         bellmanFord2 ABC137E
@@ -87,6 +88,31 @@ struct Graph {
             }
         }
         return ret;
+    }
+    //2部グラフ判定
+    bool isBipartile() {
+        vector<int> memo(n, -1);
+        rep(i, n) {
+            if(memo[i] != -1) continue;
+            queue<int> q;
+            q.push(i);
+            memo[i] = 0;
+            while(!q.empty()) {
+                auto v = q.front();
+                q.pop();
+                for(auto&& e: es[v]) {
+                    auto u = e.to;
+                    if(memo[u] == -1) {
+                        memo[u] = !memo[v];
+                        q.push(u);
+                    }
+                    else if(memo[u] == memo[v]) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 };
 
