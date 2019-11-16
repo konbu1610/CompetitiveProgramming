@@ -6,13 +6,23 @@
     
     verify
     Graph:
-        dijkstra        ABC035D
+        dijkstra        ABC035D, aoj1383
         warshall_floyd  ABC051D
         isBipartile     code-festival2017QualB C
+
+    GraphUD:
+        getBridges      aoj1383
 
     GraphD:
         bellmanFord2 ABC137E
 */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define rep(i,n) REP(i,0,n)
+#define REP(i,s,e) for(int i=(s); i<(int)(e); i++)
+#define all(r) r.begin(),r.end()
 
 template<typename T> T chmax(T& a, const T& b) {return a = (a > b ? a : b);}
 template<typename T> T chmin(T& a, const T& b) {return a = (a < b ? a : b);}
@@ -21,7 +31,7 @@ template<typename T> T chmin(T& a, const T& b) {return a = (a < b ? a : b);}
 //有向、無向グラフ共通クラス(隣接リスト)
 struct Graph {
     int n;
-    using WEIGHT_TYPE = ll;
+    using WEIGHT_TYPE = long long;
     static const WEIGHT_TYPE INF = 1e18;
     struct Edge {
         int to;
@@ -44,9 +54,9 @@ struct Graph {
         q.push({0LL, s});
         while (!q.empty()) {
             auto p = q.top(); q.pop();
-            int cur = p.se;
-            auto cost = p.fi;
-            if (d[cur] < p.fi) continue;
+            int cur = p.second;
+            auto cost = p.first;
+            if (d[cur] < p.first) continue;
             for (auto& e : es[cur]) {
                 int to = e.to;
                 auto dist = e.weight + cost;
@@ -129,6 +139,56 @@ struct GraphUD : public Graph {
             if (i < e.to) ret.push_back({i, e.to, e.weight});
         }
         return ret;
+    }
+    // 橋の検出
+    // http://nupioca.hatenadiary.jp/entry/2013/11/03/200006
+    // Calculate bridges in a undirected graph.
+    // Assume graph is connected and has no parallel edges or self-loops.
+    vector<Edge2> getBridges()
+    {
+        int V = n;
+        // res: bridges
+        vector<Edge2> res;
+        // assume at least the first vertex exists
+        vector<int> low(V, -1); // lowest reacheable index
+        vector<int> pre(V, -1); // pre-order index
+        int count = 0;          // pre-order index counter
+
+        // v: current node
+        // from: parent node
+        function<int(int, int)> dfs = [&](int v, int from) {
+            pre[v] = count++;
+            low[v] = pre[v];
+            for (auto &&e : es[v])
+            {
+                int to = e.to;
+                if (pre[to] == -1)
+                {
+                    // destination has not been visited
+                    // visit destination and update low[v]
+                    low[v] = min(low[v], dfs(to, v));
+                    if (low[to] == pre[to])
+                    {
+                        // edge is not contained in a closed path -> bridge
+                        res.push_back({v, to, e.weight});
+                    }
+                }
+                else
+                {
+                    if (from == to)
+                    {
+                        // ignore a path to parent
+                        continue;
+                    }
+                    low[v] = min(low[v], low[to]);
+                }
+            }
+            return low[v];
+        };
+
+        dfs(0, -1); // start dfs from vertex 0
+
+        return res;
     }
 };
 
@@ -237,3 +297,8 @@ struct GraphD : public Graph {
         return dist;
     }
 };
+
+// int main() {
+
+//     return 0;
+// }
