@@ -18,19 +18,19 @@ public:
     {
         for (int i_ = i + 1; i_ < n; i_ += i_ & -i_)
             for (int j_ = j + 1; j_ < m; j_ += j_ & -j_)
-                (bit[i_][j_] += val) %= MOD;
+                bit[i_][j_] += val;
     }
     T sum(int i, int j)
     {
         T s = 0;
         for (int i_ = i + 1; i_ > 0; i_ -= i_ & -i_)
             for (int j_ = j + 1; j_ > 0; j_ -= j_ & -j_)
-                (s += bit[i_][j_]) %= MOD;
+                s += bit[i_][j_];
         return s;
     }
     T sum(int lx, int rx, int ly, int ry)
     {
-        return ((sum(rx - 1, ry - 1) - sum(lx - 1, ry - 1) - sum(rx - 1, ly - 1) + sum(lx - 1, ly - 1)) % MOD + MOD) % MOD;
+        return sum(rx - 1, ry - 1) - sum(lx - 1, ry - 1) - sum(rx - 1, ly - 1) + sum(lx - 1, ly - 1);
     }
     BIT(int sz1, int sz2)
     {
@@ -68,4 +68,3 @@ public:
         }
     }
 };
-
