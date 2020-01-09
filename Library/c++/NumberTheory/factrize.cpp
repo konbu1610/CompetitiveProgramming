@@ -14,7 +14,7 @@ void factrize(ll n, Facts& mp) {
       n /= i;
       ++cnt;
     }
-    mp[i] += cnt;
+    if(cnt != 0) mp[i] += cnt;
   }
   if(n != 1) mp[n]++;
 }
