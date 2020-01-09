@@ -6,7 +6,7 @@
 namespace Doubling {
     using NODE_TYPE = int;
     using COST_TYPE = long long;
-    // d[i][0]はあらかじめ計算しておく！, iはトポロジカルソート後のidx
+    // d[i][0]はあらかじめ計算しておく！
     void preCalc(vector<vector<NODE_TYPE>>& d) {
         int n = d.size();
         int m = d[0].size();
@@ -26,7 +26,7 @@ namespace Doubling {
         }
         return cur;
     }
-    // 頂点uから頂点vまでのコストを求める
+    // 頂点uから頂点vまでのコストを求める(iはトポロジカルソート後のidx)
     COST_TYPE getCost(NODE_TYPE u, NODE_TYPE v, const vector<vector<NODE_TYPE>>& d) {
         if(u >= v) assert(false);
         int n = d.size();
