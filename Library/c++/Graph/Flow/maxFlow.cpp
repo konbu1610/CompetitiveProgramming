@@ -1,6 +1,6 @@
 /*
     最大流
-    verified AOJ GLR7-A
+    verified AOJ GLR7-A, ABC010D
 */
 struct MaxFlow {
     struct Edge {
