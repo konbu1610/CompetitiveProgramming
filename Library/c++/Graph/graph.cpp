@@ -35,7 +35,7 @@ template <typename T> T chmin(T &a, const T &b) { return a = (a < b ? a : b); }
 struct Graph {
     int n;
     using WEIGHT_TYPE = long long;
-    static const WEIGHT_TYPE INF = 1e18;
+    const WEIGHT_TYPE INF = 1e18;
     struct Edge {
         int to;
         WEIGHT_TYPE weight;

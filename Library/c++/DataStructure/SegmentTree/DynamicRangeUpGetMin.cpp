@@ -20,7 +20,7 @@ struct Node {
         return (lazy != initLazy ? lazy : val); //TODO: fix
     }
     T f1(const T& a, const T& b) {
-        return min(a, b);               //TODO: fix
+        return max(a, b);               //TODO: fix
     }
     T f2(const T& a, const T& b) {
         return b;                       //TODO: fix
