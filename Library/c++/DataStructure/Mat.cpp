@@ -1,36 +1,55 @@
-// Matrix
-// verified yukicoder 658
-template <int SZ>
+/* Matrix
+    verified
+        yukicoder 658
+        aoj ALDS1_10
+*/
+template <class T, int SZ>
 struct Mat {
-    array<array<ll, SZ>, SZ> d;
+    array<array<T, SZ>, SZ> d;
     const int n;
     Mat() : n(SZ) {
-        array<ll, SZ> tmp;
-        tmp.fill(0);
+        array<T, SZ> tmp;
         d.fill(tmp);
     }
-    Mat<SZ> operator * (const Mat<SZ>& mt) const {
-        Mat<SZ> ret;
+    Mat operator * (const Mat& mt) const {
+        Mat ret;
         rep(i, SZ) rep(j, SZ) {
-            ll sum = 0LL;
             rep(k, SZ) {
-                (ret.d[i][j] += (d[i][k] * mt.d[k][j]) % MOD) %= MOD;
+                ret.d[i][j] += (d[i][k] * mt.d[k][j]);
             }
         }
         return ret;
     }
-    Mat<SZ>& operator = (const Mat<SZ>& mt) {
+    Mat& operator *= (const Mat& mt) {
+        *this = *this * mt;
+        return *this;
+    }
+    Mat& operator = (const Mat& mt) {
         d = mt.d;
         return *this;
     }
+    array<T, SZ>& operator [](const int n) {
+        return d[n];
+    }
 };
-template <int SZ> 
-Mat<SZ> pow(Mat<SZ> mt, ll n) {
-    Mat<SZ> ret;
+
+template <class T, int SZ> 
+Mat<T, SZ> pow(Mat<T, SZ> mt, ll n) {
+    Mat<T, SZ> ret;
     rep(i, SZ) ret.d[i][i] = 1LL;
     while(n > 0) {
         if(n&1LL) ret = ret * mt;
         mt = mt*mt;
+        n >>= 1;
+    }
+    return ret;
+}
+
+template <typename T, typename U> T pow_fast(T x, U n) {
+    T ret = (T)1;
+    while(n) {
+        if(n & (U)1) ret *= x;
+        x *= x;
         n >>= 1;
     }
     return ret;
