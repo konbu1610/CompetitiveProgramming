@@ -1,10 +1,13 @@
 /*
-    verified ABC130E
+    verified
+        ABC130E
+        JOI 2011 honsenA https://atcoder.jp/contests/joi2011ho/tasks/joi2011ho1
 */
 
 // https://kopricky.github.io/code/DataStructure_Advanced/bit_2d.html
 // add (i, j)
 // sum(i, j) -> [0, i] [0, j]
+// sum(a, b, c, d) -> [a, c] -> (b, d) 
 // 閉区間に注意
 template <typename T>
 class BIT

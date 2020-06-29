@@ -2,7 +2,8 @@
     ModInt
     verify
         ARC039 B
-
+        ARC044 B
+        ABC024 D
 */
 
 template <typename T, typename U> T pow_fast(T x, U n) {
@@ -45,6 +46,7 @@ template <typename ModType, ModType MOD> struct ModInt {
     ModInt operator*(const ModInt &m) const { return ModInt(*this) *= m; }
     ModInt operator/(const ModInt &m) const { return ModInt(*this) /= m; }
     ModInt inverse() const { return pow_fast(*this, MOD - 2); }
+    ModInt pow(ModType n) const {return pow_fast(*this, n); }
 
     friend std::ostream &operator<<(std::ostream &os, const ModInt &rhs) {
         os << rhs.val;

@@ -2,7 +2,7 @@
 // cost 0 での遷移を書いてからpreCalcする！
 // verify 
 //  getCost ARC060E
-//  getNode ABC136D
+//  getNode ABC136D ABC013D
 namespace Doubling {
     using NODE_TYPE = int;
     using COST_TYPE = long long;
