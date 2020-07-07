@@ -14,6 +14,7 @@ struct Mat {
         array<T, SZ> tmp;
         d.fill(tmp);
     }
+    Mat(const array<array<T, SZ>, SZ>& d) :n(SZ), d(d){}
     Mat operator * (const Mat& mt) const {
         Mat ret;
         rep(i, SZ) rep(j, SZ) {
@@ -36,8 +37,7 @@ struct Mat {
         return d[n];
     }
     Mat pow(ll n) const {
-        Mat tmp;
-        tmp.d = this->d;
+        Mat tmp(this->d);
         Mat<T, SZ> ret;
         rep(i, SZ) ret.d[i][i] = 1LL;
         while(n > 0) {
