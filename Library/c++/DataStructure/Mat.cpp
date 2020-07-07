@@ -35,12 +35,14 @@ struct Mat {
     array<T, SZ>& operator [](const int n) {
         return d[n];
     }
-    Mat pow(ll n) {
+    Mat pow(ll n) const {
+        Mat tmp;
+        tmp.d = this->d;
         Mat<T, SZ> ret;
         rep(i, SZ) ret.d[i][i] = 1LL;
         while(n > 0) {
-            if(n&1LL) ret = ret * (*this);
-            *this = (*this)*(*this);
+            if(n&1LL) ret = ret * tmp;
+            tmp *= tmp;
             n >>= 1;
         }
         return ret;
