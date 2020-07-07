@@ -1,8 +1,11 @@
 /* Matrix
     verified
         yukicoder 658
+        yukicoder 1105
         aoj ALDS1_10
 */
+
+
 template <class T, int SZ>
 struct Mat {
     array<array<T, SZ>, SZ> d;
@@ -28,29 +31,18 @@ struct Mat {
         d = mt.d;
         return *this;
     }
+    Mat(Mat&&)=default;
     array<T, SZ>& operator [](const int n) {
         return d[n];
     }
+    Mat pow(ll n) {
+        Mat<T, SZ> ret;
+        rep(i, SZ) ret.d[i][i] = 1LL;
+        while(n > 0) {
+            if(n&1LL) ret = ret * (*this);
+            *this = (*this)*(*this);
+            n >>= 1;
+        }
+        return ret;
+    }
 };
-
-template <class T, int SZ> 
-Mat<T, SZ> pow(Mat<T, SZ> mt, ll n) {
-    Mat<T, SZ> ret;
-    rep(i, SZ) ret.d[i][i] = 1LL;
-    while(n > 0) {
-        if(n&1LL) ret = ret * mt;
-        mt = mt*mt;
-        n >>= 1;
-    }
-    return ret;
-}
-
-template <typename T, typename U> T pow_fast(T x, U n) {
-    T ret = (T)1;
-    while(n) {
-        if(n & (U)1) ret *= x;
-        x *= x;
-        n >>= 1;
-    }
-    return ret;
-}
